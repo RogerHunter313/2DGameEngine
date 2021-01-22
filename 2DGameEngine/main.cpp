@@ -14,9 +14,20 @@ int main(int argc, char** argv) {
 
 	while (game->getIsRunning()) {
 		game->processInput();
-		//game->update();
+		game->update();
 		game->render();
 	}
+
+	
+
+	sol::state lua;
+	lua.open_libraries(sol::lib::base);
+
+	glm::vec2 velocity = glm::vec2(2.0, -1.0);
+
+	SDL_Init(SDL_INIT_EVERYTHING);
+
+	cout << "Yay! Dependencies are working correctly!" << endl;
 
 	game->destroy();
 

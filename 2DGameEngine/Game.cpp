@@ -1,10 +1,10 @@
 #include "Game.h"
 #include "Constants.h"
+#include <iostream>
+#include <glm/glm.hpp>
 
-float projectilePosX = 0.0f;
-float projectilePosY = 0.0f;
-float projectileVelX = 120.0f;
-float projectileVelY = 200.0f;
+glm::vec2 projectilePos = glm::vec2(0.0f, 0.0f);
+glm::vec2 projectileVel = glm::vec2(100.0f, 100.0f);
 
 Game::Game() {
 	this->isRunning = false;
@@ -68,10 +68,18 @@ void Game::processInput() {
 }
 
 void Game::update() {
-	// Wait until 16ms has elapssed since the last frame
-	while (!SDL_TICKS_PASSED(SDL_GetTicks(), ticksLastFrame + FRAME_TARGET_TIME)) {
-		//just pause or waste time until we reach	FRAME_TARGET_TIME
+	//Sleep the execution until we reach the target frame time in milliseconds
+	int timeToWait = FRAME_TARGET_TIME - (SDL_GetTicks() - ticksLastFrame);
+
+	//Only call delay if we are too far to prcocess this frame
+	if (timeToWait > 0 && timeToWait <= FRAME_TARGET_TIME) {
+		SDL_Delay(timeToWait);
 	}
+	
+	// Wait until 16ms has elapssed since the last frame	
+	//while (!SDL_TICKS_PASSED(SDL_GetTicks(), ticksLastFrame + FRAME_TARGET_TIME)) {  BAD, don't do
+	//	//just pause or waste time until we reach	FRAME_TARGET_TIME.  WAIT while loops are bad because 100% of the cpu core will go to the while loop.  we don't want to waste resources
+	//}
 
 	//deltaTime is the difference in ticks from the last frame converted to seconds
 	float deltaTime = (SDL_GetTicks() - ticksLastFrame) / 1000.0f;  //dividing by 1000 to know how much should you move by second, SDL_GetTicks apparently returns miliseconds
@@ -82,23 +90,35 @@ void Game::update() {
 	//sets the new ticks/timestamps for the ccurrent frame to be used in the next pass
 	ticksLastFrame = SDL_GetTicks();   //SDL_GetTicks starts keeping time from the point we call SDL_INIT_EVERYTHING
 
-	projectilePosX += projectileVelX * deltaTime;
-	projectilePosY += projectileVelY * deltaTime;
+	// Use deltaTime to update my game objects
+	projectilePos = glm::vec2(
+		projectilePos.x + projectileVel.x * deltaTime,
+		projectilePos.y + projectileVel.y * deltaTime
+	);
 }
 
 void Game::render() {
+	// set the background color
 	SDL_SetRenderDrawColor(renderer, 21, 21, 21,255);
+	
+	// clear the back buffer
 	SDL_RenderClear(renderer);
 
-	SDL_Rect projectile{
-		(int)projectilePosX,
-		(int)projectilePosY,
+	// draw alal the game objects
+
+	SDL_Rect projectile = {
+		(int) projectilePos.x,
+		(int) projectilePos.y,
 		10,
 		10
 	};
 
-	SDL_SetRenderDrawColor(renderer, 255, 255, 255, 255);
+	SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
 	SDL_RenderFillRect(renderer, &projectile);
+
+	//SDL_RenderCopy(renderer, NULL, NULL, &projectile);
+	//SDL2 does all double buffering, which means, nothing shows up on the screen 
+	//until everything is rendered and the SDL_RenderPresent executes below
 
 	SDL_RenderPresent(renderer);
 }

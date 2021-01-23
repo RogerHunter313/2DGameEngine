@@ -12,16 +12,18 @@ class Game {
 		~Game();
 		int ticksLastFrame = 0;
 		bool getIsRunning() const;
-		void initialize(int width, int height);
-		void processInput();
-		void update();
-		void render();
-		void destroy();	
+		static SDL_Renderer* renderer;  //https://www.geeksforgeeks.org/static-keyword-cpp/
+		void LoadLevel(int levelNumber);
+		void Initialize(int width, int height);
+		void ProcessInput();
+		void Update();
+		void Render();
+		void Destroy();	
 
 	private:
 		bool isRunning;
 		SDL_Window* window;
-		SDL_Renderer* renderer;
+		
 
 };
 

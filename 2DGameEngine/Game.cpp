@@ -2,9 +2,11 @@
 #include "Constants.h"
 #include <iostream>
 #include <glm/glm.hpp>
+#include "EntityManager.h"
 
-glm::vec2 projectilePos = glm::vec2(0.0f, 0.0f);
-glm::vec2 projectileVel = glm::vec2(100.0f, 100.0f);
+EntityManager manager;
+SDL_Renderer* Game::renderer;
+
 
 Game::Game() {
 	this->isRunning = false;
@@ -18,7 +20,7 @@ bool Game::getIsRunning() const {
 	return this->isRunning;
 }
 
-void Game::initialize(int width, int height) {
+void Game::Initialize(int width, int height) {
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
 		cerr << "Error initializing SDL." << endl;
 		return;	
@@ -48,7 +50,7 @@ void Game::initialize(int width, int height) {
 	return;
 }
 
-void Game::processInput() {
+void Game::ProcessInput() {
 	SDL_Event event;
 	SDL_PollEvent(&event);
 	switch (event.type) {
@@ -67,7 +69,7 @@ void Game::processInput() {
 	}
 }
 
-void Game::update() {
+void Game::Update() {
 	//Sleep the execution until we reach the target frame time in milliseconds
 	int timeToWait = FRAME_TARGET_TIME - (SDL_GetTicks() - ticksLastFrame);
 
@@ -89,32 +91,22 @@ void Game::update() {
 
 	//sets the new ticks/timestamps for the ccurrent frame to be used in the next pass
 	ticksLastFrame = SDL_GetTicks();   //SDL_GetTicks starts keeping time from the point we call SDL_INIT_EVERYTHING
+	
+	// TODO:
+	// Here we call the manager.update to update all entities as a function of deltaTime
 
-	// Use deltaTime to update my game objects
-	projectilePos = glm::vec2(
-		projectilePos.x + projectileVel.x * deltaTime,
-		projectilePos.y + projectileVel.y * deltaTime
-	);
 }
 
-void Game::render() {
+void Game::Render() {
 	// set the background color
 	SDL_SetRenderDrawColor(renderer, 21, 21, 21,255);
 	
 	// clear the back buffer
 	SDL_RenderClear(renderer);
 
-	// draw alal the game objects
+	// TODO:
+	// Here we call the manager.render to render all entities
 
-	SDL_Rect projectile = {
-		(int) projectilePos.x,
-		(int) projectilePos.y,
-		10,
-		10
-	};
-
-	SDL_SetRenderDrawColor(renderer, 0, 0, 255, 255);
-	SDL_RenderFillRect(renderer, &projectile);
 
 	//SDL_RenderCopy(renderer, NULL, NULL, &projectile);
 	//SDL2 does all double buffering, which means, nothing shows up on the screen 
@@ -123,7 +115,7 @@ void Game::render() {
 	SDL_RenderPresent(renderer);
 }
 
-void Game::destroy() {
+void Game::Destroy() {
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 	SDL_Quit();

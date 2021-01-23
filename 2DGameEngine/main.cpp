@@ -13,12 +13,12 @@ int main(int argc, char** argv) {
 
 	Game game;	//don't put a () here, create game on the stack
 
-	game.initialize(WINDOW_WIDTH, WINDOW_HEIGHT);
+	game.Initialize(WINDOW_WIDTH, WINDOW_HEIGHT);
 
 	while (game.getIsRunning()) {
-		game.processInput();
-		game.update();
-		game.render();
+		game.ProcessInput();
+		game.Update();
+		game.Render();
 	}
 
 	sol::state lua;
@@ -27,7 +27,7 @@ int main(int argc, char** argv) {
 	SDL_Init(SDL_INIT_EVERYTHING);
 	cout << "Yay! Dependencies are working correctly!" << endl;
 
-	game.destroy();
+	game.Destroy();
 
 	return 0;
 }

@@ -3,6 +3,8 @@
 
 #include <vector>
 #include <string>
+#include <typeinfo>
+#include <map>
 #include "EntityManager.h"
 #include "Component.h"
 
@@ -24,14 +26,21 @@ class Entity {
 			T* newComponent(new T(std::forward<TArgs>(args)...));
 			newComponent->owner = this;
 			components.emplace_back(newComponent);  //https://stackoverflow.com/questions/10890653/why-would-i-ever-use-push-back-instead-of-emplace-back
+			componentTypeMap[&typeid(*newComponent)] = newComponent;  //complete a map based on type
 			newComponent->Initialize();
 			return *newComponent;
+		}
+
+		template <typename T>
+		T* GetComponent() {
+			return static_cast<T*>(componentTypeMap[&typeid(T)]);
 		}
 
 	private:
 		EntityManager& manager;
 		bool isActive;
 		std::vector<Component*> components;
+		std::map<const std::type_info*, Component*> componentTypeMap;
 };
 
 #endif

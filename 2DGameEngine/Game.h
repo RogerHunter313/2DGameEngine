@@ -2,8 +2,13 @@
 #define GAME_H
 
 #include <SDL.h>
+#include "Entity.h"
+#include "Component.h"
+#include "EntityManager.h"
 #include <iostream>
 using namespace std;
+
+class AssetManager;
 
 class Game {
 	
@@ -13,6 +18,7 @@ class Game {
 		int ticksLastFrame = 0;
 		bool getIsRunning() const;
 		static SDL_Renderer* renderer;  //https://www.geeksforgeeks.org/static-keyword-cpp/
+		static AssetManager* assetManager;
 		void LoadLevel(int levelNumber);
 		void Initialize(int width, int height);
 		void ProcessInput();

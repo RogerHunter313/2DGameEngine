@@ -3,6 +3,8 @@
 #include <iostream>
 #include <glm/glm.hpp>
 #include "EntityManager.h"
+#include "Component.h"
+#include "TransformComponent.h"
 
 EntityManager manager;
 SDL_Renderer* Game::renderer;
@@ -46,8 +48,17 @@ void Game::Initialize(int width, int height) {
 		return;
 	}
 
+	LoadLevel(0);
+
 	isRunning = true;
 	return;
+}
+
+void Game::LoadLevel(int levelNumber) {
+
+	Entity& newEntity(manager.AddEntity("projectile"));
+	newEntity.AddComponent<TransformComponent>(0, 0, 20, 20, 32, 32, 1);
+
 }
 
 void Game::ProcessInput() {
@@ -92,9 +103,7 @@ void Game::Update() {
 	//sets the new ticks/timestamps for the ccurrent frame to be used in the next pass
 	ticksLastFrame = SDL_GetTicks();   //SDL_GetTicks starts keeping time from the point we call SDL_INIT_EVERYTHING
 	
-	// TODO:
-	// Here we call the manager.update to update all entities as a function of deltaTime
-
+	manager.Update(deltaTime);
 }
 
 void Game::Render() {
@@ -104,9 +113,11 @@ void Game::Render() {
 	// clear the back buffer
 	SDL_RenderClear(renderer);
 
-	// TODO:
-	// Here we call the manager.render to render all entities
+	if (manager.HasNoEntities()) {
+		return;
+	}
 
+	manager.Render();
 
 	//SDL_RenderCopy(renderer, NULL, NULL, &projectile);
 	//SDL2 does all double buffering, which means, nothing shows up on the screen 

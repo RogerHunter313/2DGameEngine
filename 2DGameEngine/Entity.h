@@ -19,6 +19,15 @@ class Entity {
 		void Destroy();
 		bool IsActive() const;
 
+		template <typename T, typename... TArgs>
+		T& AddComponent(TArgs&&... args) {
+			T* newComponent(new T(std::forward<TArgs>(args)...));
+			newComponent->owner = this;
+			components.emplace_back(newComponent);  //https://stackoverflow.com/questions/10890653/why-would-i-ever-use-push-back-instead-of-emplace-back
+			newComponent->Initialize();
+			return *newComponent;
+		}
+
 	private:
 		EntityManager& manager;
 		bool isActive;

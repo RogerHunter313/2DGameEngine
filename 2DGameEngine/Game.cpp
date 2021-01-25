@@ -61,12 +61,22 @@ void Game::LoadLevel(int levelNumber) {
 	// Start including new assets to the assetManager list
 	std::string textureFilePath = "./assets/images/tank-big-right.png";  //just pasted his assets folder where my .cpp files were stored
 	assetManager->AddTexture("tank-image", textureFilePath.c_str());  //c_str gets "old school" pointer to char string
+	
+	// assets for second entity
+	std::string textureFilePath2 = "./assets/images/tank-small-right.png";
+	assetManager->AddTexture("small-tank-image", textureFilePath2.c_str());
 
 	// Start including entities and also component to them
-
 	Entity& newEntity(manager.AddEntity("tank"));
 	newEntity.AddComponent<TransformComponent>(0, 0, 20, 20, 32, 32, 1);
 	newEntity.AddComponent<SpriteComponent>("tank-image");
+
+	// creating second entity
+	Entity& newEntity2(manager.AddEntity("tank2"));  //need a different name for each Entity
+	newEntity2.AddComponent<TransformComponent>(50, 50, 20, 20, 32, 32, 1);
+	newEntity2.AddComponent<SpriteComponent>("small-tank-image");
+
+	manager.ListAllEntities();
 }
 
 void Game::ProcessInput() {

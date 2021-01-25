@@ -1,4 +1,5 @@
 #include "EntityManager.h"
+#include <iostream>
 
 void EntityManager::ClearData() {
 	for (auto& entity : entities) {
@@ -18,6 +19,12 @@ void EntityManager::Render() {
 	}
 }
 
+void EntityManager::ListAllEntities() {
+	for (auto& entity : entities) {
+		std::cout << "Entity Name: " << entity->GetName() << std::endl;
+		std::cout << std::endl;
+	}
+}
 
 bool EntityManager::HasNoEntities() {
 	return entities.size() == 0;

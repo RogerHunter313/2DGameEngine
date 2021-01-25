@@ -20,6 +20,7 @@ class Entity {
 		void Render();
 		void Destroy();
 		bool IsActive() const;
+		std::string GetName() const;
 
 		template <typename T, typename... TArgs>
 		T& AddComponent(TArgs&&... args) {

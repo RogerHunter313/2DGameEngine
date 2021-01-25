@@ -9,6 +9,10 @@ Entity::Entity(EntityManager& manager, std::string name) : manager(manager), nam
 	this->isActive = true;
 }
 
+std::string Entity::GetName() const {
+	return name;
+}
+
 void Entity::Update(float deltaTime) {
 	for (auto& component : components) {
 		component->Update(deltaTime);

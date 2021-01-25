@@ -19,10 +19,17 @@ void EntityManager::Render() {
 	}
 }
 
-void EntityManager::ListAllEntities() {
+void EntityManager::ListAllEntities() const{
+
+	unsigned int i = 0;  //keep track of the number of entities
+
 	for (auto& entity : entities) {
-		std::cout << "Entity Name: " << entity->GetName() << std::endl;
+		std::cout << "Entity ["<< i << "] = " << entity->GetName() << std::endl;
+		
+		entity->ListAllComponents();
+
 		std::cout << std::endl;
+		i++;
 	}
 }
 

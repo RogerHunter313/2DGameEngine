@@ -21,6 +21,7 @@ class Entity {
 		void Destroy();
 		bool IsActive() const;
 		std::string GetName() const;
+		void ListAllComponents() const;
 
 		template <typename T, typename... TArgs>
 		T& AddComponent(TArgs&&... args) {

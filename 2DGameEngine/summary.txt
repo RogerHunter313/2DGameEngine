@@ -1,0 +1,55 @@
+Current 2D Game Engine Summarized for Fellow Noobs
+
+Initialize(WINDOW_WIDTH, WINDOW_HEIGHT)
+	-Initializes everything for SDL
+	-Creates a window with the passed in width and height
+	-Creates a renderer for the window
+	-provides error messages if the SDL window or render cannot be created
+	
+	LoadLevel(0)  //may create multiple levels later?
+		-Adds Assets to the asset manager  //think this needs to be done first so Entities know what we are referencing
+			-set textureFilePath to a string
+			-AddTexture to the asset manager and give it a name like "tank-image"
+		
+		
+		-Adds Entity to the entity manager and give it a name like "tank"
+			-Add components to your Entity.
+				-we have only two types for now
+					-TransformComponent
+						-pass in position, velocity, width, height, and scale
+					-SpriteComponent
+						-pass in the name of the asset like "tank-image"
+	
+	-return isRunning = true;
+
+Game Loop:
+	-ProcessInput()
+		-just closes the window if the esc button is pressed
+		
+	-Update()
+		-just sets up deltaTime so the games frame rates are independent of processing speed
+		
+	-Render()
+		-sets a background color
+			-we do this every game loop?
+		-clears the back buffer for the renderer
+		-checks if the entity manager has anything in it
+		-EntityManger->Render()
+			-Entity->Render()
+				-Component->Render()
+					-Render() in SpriteComponent 
+						-TextureManager::Draw(texture, sourcRectangle, destinationRectangle)
+							-This passes the arguments to SDL_RenderCopyEx(renderer, texture, &sourceRectangle, &destinationRectangle, NULL, NULL, flip)
+								-i'm thinking this will help with sprite sheets later
+							
+					-Render() in TransformComponent is blank
+					
+	-SDL_RenderPresent(renderer)
+		-put everything in the buffer on the screen
+		
+Exit Game Loop:
+	-Destroy() 
+		-Destroy renderer
+		-Destroy window
+		-Quit_Game
+		

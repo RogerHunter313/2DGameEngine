@@ -64,17 +64,23 @@ void Game::LoadLevel(int levelNumber) {
 	
 	// assets for second entity
 	std::string textureFilePath2 = "./assets/images/tank-small-right.png";
-	assetManager->AddTexture("small-tank-image", textureFilePath2.c_str());
+	assetManager->AddTexture("small-tank-image", std::string("./assets/images/tank-small-right.png").c_str()); //same as above just with one line
+
+	assetManager->AddTexture("chopper-image", std::string("./assets/images/chopper-spritesheet.png").c_str());
 
 	// Start including entities and also component to them
-	Entity& newEntity(manager.AddEntity("tank"));
-	newEntity.AddComponent<TransformComponent>(0, 0, 20, 20, 32, 32, 1);
-	newEntity.AddComponent<SpriteComponent>("tank-image");
+	Entity& bigTankEntity(manager.AddEntity("big-tank"));
+	bigTankEntity.AddComponent<TransformComponent>(0, 0, 20, 20, 32, 32, 1);
+	bigTankEntity.AddComponent<SpriteComponent>("tank-image");
 
 	// creating second entity
-	Entity& newEntity2(manager.AddEntity("tank2"));  //need a different name for each Entity
-	newEntity2.AddComponent<TransformComponent>(50, 50, 20, 20, 32, 32, 1);
-	newEntity2.AddComponent<SpriteComponent>("small-tank-image");
+	Entity& smallTankEntity(manager.AddEntity("small-tank"));  
+	smallTankEntity.AddComponent<TransformComponent>(50, 50, 30, 30, 32, 32, 1);
+	smallTankEntity.AddComponent<SpriteComponent>("small-tank-image");
+
+	Entity& chopperEntity(manager.AddEntity("chopper"));
+	chopperEntity.AddComponent<TransformComponent>(240, 106, 0, 0, 32, 32, 1);
+	chopperEntity.AddComponent<SpriteComponent>("chopper-image");  
 
 	manager.ListAllEntities();
 }
@@ -148,5 +154,7 @@ void Game::Destroy() {
 	SDL_DestroyRenderer(renderer);
 	SDL_DestroyWindow(window);
 	SDL_Quit();
+
+	//TODO delete all the new pointers for components, entities, entityManager where applicable
 }
 

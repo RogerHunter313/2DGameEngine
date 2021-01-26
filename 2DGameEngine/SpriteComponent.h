@@ -6,6 +6,7 @@
 #include "TextureManager.h"
 #include "AssetManager.h"
 #include "TransformComponent.h"
+#include "Animation.h"
 
 class SpriteComponent : public Component { //inherits from component
 	public:
@@ -43,6 +44,13 @@ class SpriteComponent : public Component { //inherits from component
 		SDL_Texture* texture;
 		SDL_Rect sourceRectangle;
 		SDL_Rect destinationRectangle;
+		bool isAnimated;
+		int numFrame;
+		int animationSpeed;
+		bool isFixed;	//for a possible user interface
+		//std::map<std::string, Animation> animations;
+		std::string currentAnimaitonName;
+		unsigned int animationIndex = 0;
 
 };
 

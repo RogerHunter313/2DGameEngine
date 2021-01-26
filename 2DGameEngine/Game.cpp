@@ -68,6 +68,8 @@ void Game::LoadLevel(int levelNumber) {
 
 	assetManager->AddTexture("chopper-image", std::string("./assets/images/chopper-spritesheet.png").c_str());
 
+	assetManager->AddTexture("radar-image", std::string("./assets/images/radar.png").c_str());
+
 	// Start including entities and also component to them
 	Entity& bigTankEntity(manager.AddEntity("big-tank"));
 	bigTankEntity.AddComponent<TransformComponent>(0, 0, 20, 20, 32, 32, 1);
@@ -80,7 +82,11 @@ void Game::LoadLevel(int levelNumber) {
 
 	Entity& chopperEntity(manager.AddEntity("chopper"));
 	chopperEntity.AddComponent<TransformComponent>(240, 106, 0, 0, 32, 32, 1);
-	chopperEntity.AddComponent<SpriteComponent>("chopper-image");  
+	chopperEntity.AddComponent<SpriteComponent>("chopper-image", 2, 90, true, false);  
+
+	Entity& radarEntity(manager.AddEntity("radar"));
+	radarEntity.AddComponent<TransformComponent>(720, 15, 0, 0, 64, 64, 1);
+	radarEntity.AddComponent<SpriteComponent>("radar-image", 8, 150, false, true);
 
 	manager.ListAllEntities();
 }

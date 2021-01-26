@@ -19,6 +19,7 @@ class Game {
 		bool getIsRunning() const;
 		static SDL_Renderer* renderer;  //https://www.geeksforgeeks.org/static-keyword-cpp/
 		static AssetManager* assetManager;
+		static SDL_Event event;
 		void LoadLevel(int levelNumber);
 		void Initialize(int width, int height);
 		void ProcessInput();

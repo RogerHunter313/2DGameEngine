@@ -1,11 +1,9 @@
 #ifndef SPRITECOMPONENT_H
-#define PRITECOMPONENT_H
+#define SPRITECOMPONENT_H   // leaving out the S here messed me up for a good 10 minutes..
 
 #include <SDL.h>
-#include "Component.h"
 #include "TextureManager.h"
 #include "AssetManager.h"
-#include "TransformComponent.h"
 #include "Animation.h"
 
 class SpriteComponent : public Component { //inherits from component

@@ -1,20 +1,12 @@
-﻿  AssetManager.cpp
-  Entity.cpp
-  EntityManager.cpp
-C:\Users\roger\Desktop\My 2D Game Engine\2DGameEngine\2DGameEngine\EntityManager.cpp(66,24): warning C4267: 'return': conversion from 'size_t' to 'unsigned int', possible loss of data
-  Game.cpp
-  main.cpp
-  Map.cpp
-C:\Users\roger\Desktop\My 2D Game Engine\2DGameEngine\2DGameEngine\TileComponent.h(30,16): warning C4244: '=': conversion from 'int' to 'T', possible loss of data
+﻿  Game.cpp
+C:\Users\roger\Desktop\My 2D Game Engine\2DGameEngine\2DGameEngine\Game.cpp(171,45): warning C4244: '=': conversion from 'T' to 'int', possible loss of data
           with
           [
               T=float
           ]
-C:\Users\roger\Desktop\My 2D Game Engine\2DGameEngine\2DGameEngine\TileComponent.h(31,16): warning C4244: '=': conversion from 'int' to 'T', possible loss of data
+C:\Users\roger\Desktop\My 2D Game Engine\2DGameEngine\2DGameEngine\Game.cpp(172,45): warning C4244: '=': conversion from 'T' to 'int', possible loss of data
           with
           [
               T=float
           ]
-  TextureManager.cpp
-  Generating Code...
   2DGameEngine.vcxproj -> C:\Users\roger\Desktop\My 2D Game Engine\2DGameEngine\x64\Debug\2DGameEngine.exe

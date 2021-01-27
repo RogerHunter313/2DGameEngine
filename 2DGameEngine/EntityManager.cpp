@@ -14,7 +14,7 @@ void EntityManager::Update(float deltaTime) {
 }
 
 void EntityManager::Render() {  //TODO:: can optimize how layers are accessed
-	for (int layerNumber = 0; layerNumber < NUM_LAYERS; layerNumber++) {
+	for (int layerNumber = 0; layerNumber <= NUM_LAYERS; layerNumber++) {
 		for (auto& entity : GetEntitiesByLayer(static_cast<LayerType>(layerNumber))) {
 			entity->Render();
 		}

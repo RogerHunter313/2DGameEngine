@@ -43,6 +43,8 @@ class KeyboardControlComponent : public Component {
 			sprite = owner->GetComponent<SpriteComponent>();
 		}
 
+		//TODO fix bug that pause game for about a second when quickly switch directions
+
 		void Update(float deltaTime) override {
 			if (Game::event.type == SDL_KEYDOWN) {
 				std::string keyCode = std::to_string(Game::event.key.keysym.sym);

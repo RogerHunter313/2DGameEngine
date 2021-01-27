@@ -14,6 +14,7 @@ EntityManager manager;
 AssetManager* Game::assetManager = new AssetManager(&manager);
 SDL_Renderer* Game::renderer;
 SDL_Event Game::event;
+SDL_Rect Game::camera = { 0,0, WINDOW_WIDTH, WINDOW_HEIGHT };
 Map* tileMap;
 
 Game::Game() {
@@ -60,6 +61,8 @@ void Game::Initialize(int width, int height) {
 	return;
 }
 
+Entity& player(manager.AddEntity("chopper", PLAYER_LAYER));  //modified chopperEntity to be global and renamed to player so it can control the game camera
+
 void Game::LoadLevel(int levelNumber) {
 	// Start including new assets to the assetManager list
 	std::string textureFilePath = "./assets/images/tank-big-right.png";  //just pasted his assets folder where my .cpp files were stored
@@ -71,7 +74,7 @@ void Game::LoadLevel(int levelNumber) {
 	assetManager->AddTexture("radar-image", std::string("./assets/images/radar.png").c_str());
 	assetManager->AddTexture("jungle-tile-image", std::string("./assets/tilemaps/jungle.png").c_str());
 
-	tileMap = new Map("jungle-tile-image", 1, 32);
+	tileMap = new Map("jungle-tile-image", 2, 32);  // name, scale, tilesize
 	tileMap->LoadMap("./assets/tilemaps/jungle.map", 25, 20);
 
 	// Start including entities and also component to them
@@ -84,10 +87,10 @@ void Game::LoadLevel(int levelNumber) {
 	smallTankEntity.AddComponent<TransformComponent>(50, 50, 30, 30, 32, 32, 1);
 	smallTankEntity.AddComponent<SpriteComponent>("small-tank-image");
 
-	Entity& chopperEntity(manager.AddEntity("chopper", PLAYER_LAYER));
-	chopperEntity.AddComponent<TransformComponent>(240, 106, 0, 0, 32, 32, 1);
-	chopperEntity.AddComponent<SpriteComponent>("chopper-image", 2, 90, true, false);  
-	chopperEntity.AddComponent<KeyboardControlComponent>("up", "right", "down", "left", "space");
+	
+	player.AddComponent<TransformComponent>(240, 106, 0, 0, 32, 32, 1);
+	player.AddComponent<SpriteComponent>("chopper-image", 2, 90, true, false);  
+	player.AddComponent<KeyboardControlComponent>("up", "right", "down", "left", "space");
 
 	Entity& radarEntity(manager.AddEntity("radar", UI_LAYER));
 	radarEntity.AddComponent<TransformComponent>(720, 15, 0, 0, 64, 64, 1);
@@ -138,6 +141,8 @@ void Game::Update() {
 	ticksLastFrame = SDL_GetTicks();   //SDL_GetTicks starts keeping time from the point we call SDL_INIT_EVERYTHING
 	
 	manager.Update(deltaTime);
+
+	HandleCameraMovement();
 }
 
 void Game::Render() {
@@ -158,6 +163,19 @@ void Game::Render() {
 	//until everything is rendered and the SDL_RenderPresent executes below
 
 	SDL_RenderPresent(renderer);
+}
+
+void Game::HandleCameraMovement() {
+	TransformComponent* mainPlayerTransform = player.GetComponent<TransformComponent>();
+
+	camera.x = mainPlayerTransform->position.x - (WINDOW_WIDTH / 2);  // pixel can be added here to adjust position of player
+	camera.y = mainPlayerTransform->position.y - (WINDOW_HEIGHT/ 2);
+
+	//clamping values of the camera
+	camera.x = camera.x < 0 ? 0 : camera.x;
+	camera.y = camera.y < 0 ? 0 : camera.y;
+	camera.x = camera.x > camera.w ? camera.w : camera.x;
+	camera.y = camera.y > camera.h ? camera.h : camera.y;
 }
 
 void Game::Destroy() {

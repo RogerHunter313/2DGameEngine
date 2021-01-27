@@ -1,2 +1,14 @@
 ﻿  Game.cpp
+  Map.cpp
+C:\Users\roger\Desktop\My 2D Game Engine\2DGameEngine\2DGameEngine\TileComponent.h(30,16): warning C4244: '=': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+C:\Users\roger\Desktop\My 2D Game Engine\2DGameEngine\2DGameEngine\TileComponent.h(31,16): warning C4244: '=': conversion from 'int' to 'T', possible loss of data
+          with
+          [
+              T=float
+          ]
+  Generating Code...
   2DGameEngine.vcxproj -> C:\Users\roger\Desktop\My 2D Game Engine\2DGameEngine\x64\Debug\2DGameEngine.exe

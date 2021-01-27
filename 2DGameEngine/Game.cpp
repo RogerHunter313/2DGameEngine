@@ -8,11 +8,13 @@
 #include "TransformComponent.h"
 #include "SpriteComponent.h"
 #include "KeyboardControlComponent.h"
+#include "Map.h"
 
 EntityManager manager;
 AssetManager* Game::assetManager = new AssetManager(&manager);
 SDL_Renderer* Game::renderer;
 SDL_Event Game::event;
+Map* tileMap;
 
 Game::Game() {
 	this->isRunning = false;
@@ -62,14 +64,15 @@ void Game::LoadLevel(int levelNumber) {
 	// Start including new assets to the assetManager list
 	std::string textureFilePath = "./assets/images/tank-big-right.png";  //just pasted his assets folder where my .cpp files were stored
 	assetManager->AddTexture("tank-image", textureFilePath.c_str());  //c_str gets "old school" pointer to char string
-	
-	// assets for second entity
 	std::string textureFilePath2 = "./assets/images/tank-small-right.png";
+	// assets below are added in just one line
 	assetManager->AddTexture("small-tank-image", std::string("./assets/images/tank-small-right.png").c_str()); //same as above just with one line
-
 	assetManager->AddTexture("chopper-image", std::string("./assets/images/chopper-spritesheet.png").c_str());
-
 	assetManager->AddTexture("radar-image", std::string("./assets/images/radar.png").c_str());
+	assetManager->AddTexture("jungle-tile-image", std::string("./assets/tilemaps/jungle.png").c_str());
+
+	tileMap = new Map("jungle-tile-image", 1, 32);
+	tileMap->LoadMap("./assets/tilemaps/jungle.map", 25, 20);
 
 	// Start including entities and also component to them
 	Entity& bigTankEntity(manager.AddEntity("big-tank"));

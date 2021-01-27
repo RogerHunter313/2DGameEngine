@@ -13,10 +13,26 @@ void EntityManager::Update(float deltaTime) {
 	}
 }
 
-void EntityManager::Render() {
-	for (auto& entity : entities) {
-		entity->Render();
+void EntityManager::Render() {  //TODO:: can optimize how layers are accessed
+	for (int layerNumber = 0; layerNumber < NUM_LAYERS; layerNumber++) {
+		for (auto& entity : GetEntitiesByLayer(static_cast<LayerType>(layerNumber))) {
+			entity->Render();
+		}
 	}
+	
+	//for (auto& entity : entities) {  //code when only one layer existed
+	//	entity->Render();
+	//}
+}
+
+std::vector<Entity*> EntityManager::GetEntitiesByLayer(LayerType layer) const {
+	std::vector<Entity*> selectedEntities;
+	for (auto& entity : entities) {
+		if (entity->layer == layer) {
+			selectedEntities.emplace_back(entity);
+		}
+	}
+	return selectedEntities;		//TODO: the nested for loops can be improved
 }
 
 void EntityManager::ListAllEntities() const{
@@ -37,8 +53,8 @@ bool EntityManager::HasNoEntities() {
 	return entities.size() == 0;
 }
 
-Entity& EntityManager::AddEntity(std::string entityName) {
-	Entity* entity = new Entity(*this, entityName);
+Entity& EntityManager::AddEntity(std::string entityName, LayerType layer) {
+	Entity* entity = new Entity(*this, entityName, layer);
 	entities.emplace_back(entity);
 	return *entity;
 }

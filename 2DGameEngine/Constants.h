@@ -7,4 +7,15 @@ const unsigned int WINDOW_HEIGHT = 600;
 const unsigned int FPS = 60;
 const unsigned int FRAME_TARGET_TIME = 1000 / FPS;   // for 60fps, one frame should last just .001666 seconds 16.6666 miliseconds.  the 1000 is just conversion to mili
 
+enum LayerType {
+	TILEMAP_LAYER = 0,
+	VEGETATION_LAYER = 1,
+	ENEMIES_LAYER = 2,
+	PLAYER_LAYER = 3,
+	PROJECTILE = 4,
+	UI_LAYER = 6
+};
+
+const unsigned int NUM_LAYERS = 6;  //manually adjust this
+
 #endif

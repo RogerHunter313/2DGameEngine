@@ -75,21 +75,21 @@ void Game::LoadLevel(int levelNumber) {
 	tileMap->LoadMap("./assets/tilemaps/jungle.map", 25, 20);
 
 	// Start including entities and also component to them
-	Entity& bigTankEntity(manager.AddEntity("big-tank"));
+	Entity& bigTankEntity(manager.AddEntity("big-tank", ENEMIES_LAYER));
 	bigTankEntity.AddComponent<TransformComponent>(0, 0, 20, 20, 32, 32, 1);
 	bigTankEntity.AddComponent<SpriteComponent>("tank-image");
 
 	// creating second entity
-	Entity& smallTankEntity(manager.AddEntity("small-tank"));  
+	Entity& smallTankEntity(manager.AddEntity("small-tank", ENEMIES_LAYER));  
 	smallTankEntity.AddComponent<TransformComponent>(50, 50, 30, 30, 32, 32, 1);
 	smallTankEntity.AddComponent<SpriteComponent>("small-tank-image");
 
-	Entity& chopperEntity(manager.AddEntity("chopper"));
+	Entity& chopperEntity(manager.AddEntity("chopper", PLAYER_LAYER));
 	chopperEntity.AddComponent<TransformComponent>(240, 106, 0, 0, 32, 32, 1);
 	chopperEntity.AddComponent<SpriteComponent>("chopper-image", 2, 90, true, false);  
 	chopperEntity.AddComponent<KeyboardControlComponent>("up", "right", "down", "left", "space");
 
-	Entity& radarEntity(manager.AddEntity("radar"));
+	Entity& radarEntity(manager.AddEntity("radar", UI_LAYER));
 	radarEntity.AddComponent<TransformComponent>(720, 15, 0, 0, 64, 64, 1);
 	radarEntity.AddComponent<SpriteComponent>("radar-image", 8, 150, false, true);
 

@@ -9,6 +9,7 @@
 #include "SpriteComponent.h"
 #include "KeyboardControlComponent.h"
 #include "Map.h"
+#include "ColliderComponent.h"
 
 EntityManager manager;
 AssetManager* Game::assetManager = new AssetManager(&manager);
@@ -81,6 +82,7 @@ void Game::LoadLevel(int levelNumber) {
 	Entity& bigTankEntity(manager.AddEntity("big-tank", ENEMIES_LAYER));
 	bigTankEntity.AddComponent<TransformComponent>(0, 0, 20, 20, 32, 32, 1);
 	bigTankEntity.AddComponent<SpriteComponent>("tank-image");
+	bigTankEntity.AddComponent<ColliderComponent>("enemy", 0, 0, 32, 32);
 
 	// creating second entity
 	Entity& smallTankEntity(manager.AddEntity("small-tank", ENEMIES_LAYER));  
@@ -91,6 +93,7 @@ void Game::LoadLevel(int levelNumber) {
 	player.AddComponent<TransformComponent>(240, 106, 0, 0, 32, 32, 1);
 	player.AddComponent<SpriteComponent>("chopper-image", 2, 90, true, false);  
 	player.AddComponent<KeyboardControlComponent>("up", "right", "down", "left", "space");
+	player.AddComponent<ColliderComponent>("player", 240, 106, 32, 32);
 
 	Entity& radarEntity(manager.AddEntity("radar", UI_LAYER));
 	radarEntity.AddComponent<TransformComponent>(720, 15, 0, 0, 64, 64, 1);
@@ -143,6 +146,7 @@ void Game::Update() {
 	manager.Update(deltaTime);
 
 	HandleCameraMovement();
+	CheckCollisions();
 }
 
 void Game::Render() {
@@ -176,6 +180,14 @@ void Game::HandleCameraMovement() {
 	camera.y = camera.y < 0 ? 0 : camera.y;
 	camera.x = camera.x > camera.w ? camera.w : camera.x;
 	camera.y = camera.y > camera.h ? camera.h : camera.y;
+}
+
+void Game::CheckCollisions() {
+	std::string collisionTagType = manager.CheckEntityCollisions(player);
+	if (collisionTagType.compare("enemy") == 0) {
+		// TODO: do something when collision is identified with an enemy
+		isRunning = false;
+	}
 }
 
 void Game::Destroy() {

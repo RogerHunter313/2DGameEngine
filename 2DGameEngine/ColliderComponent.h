@@ -35,6 +35,11 @@ public:
 			destinationRectangle.x = collider.x - Game::camera.x;
 			destinationRectangle.y = collider.y - Game::camera.y;
 	}
+
+	void Render() override {
+		//TODO figure out how to put a collision box outline on screen. 
+
+	}
 };
 
 #endif

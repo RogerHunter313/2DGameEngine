@@ -49,25 +49,49 @@ class KeyboardControlComponent : public Component {
 			if (Game::event.type == SDL_KEYDOWN) {
 				std::string keyCode = std::to_string(Game::event.key.keysym.sym);
 				
-				if (keyCode.compare(upKey) == 0) {
-					transform->velocity.y = -100;
-					transform->velocity.x = 0;
-					sprite->Play("UpAnimation");
+				if (keyCode.compare(upKey) == 0) {  //TODO fix random delay while switching directions
+					if (transform->position.y < 0) {
+						transform->velocity.y = 0;
+						transform->velocity.x = 0;
+					}
+					else if (transform->position.y > 0) {
+						transform->velocity.y = -100;
+						transform->velocity.x = 0;
+						sprite->Play("UpAnimation");
+					}
 				}
-				if (keyCode.compare(rightKey) == 0) {
-					transform->velocity.y = 0;
-					transform->velocity.x = 100;
-					sprite->Play("RightAnimation");
+				if (keyCode.compare(rightKey) == 0) {		//TODO have player go all the way to the right edge with appropriate camera control
+					if (transform->position.x > 800 - transform->width) {
+						transform->velocity.x = 0;
+						transform->velocity.y = 0;
+					}
+					else if (transform->position.x < 800 - transform->width) {
+						transform->velocity.y = 0;
+						transform->velocity.x = 100;
+						sprite->Play("RightAnimation");
+					}
 				}
 				if (keyCode.compare(downKey) == 0) {
-					transform->velocity.y = 100;
-					transform->velocity.x = 0;
-					sprite->Play("DownAnimation");
+					if (transform->position.y > 600) {
+						transform->velocity.y = 0;
+						transform->velocity.x = 0;
+					}
+					else if (transform->position.y < 600) {
+						transform->velocity.y = 100;
+						transform->velocity.x = 0;
+						sprite->Play("DownAnimation");
+					}
 				}
 				if (keyCode.compare(leftKey) == 0) {
-					transform->velocity.y = 0;
-					transform->velocity.x = -100;
-					sprite->Play("LeftAnimation");
+					if (transform->position.x < 0) {  //stops chopper at left edge
+						transform->velocity.y = 0;
+						transform->velocity.x = 0;
+					}
+					else if (transform->position.x > 0) {
+						transform->velocity.y = 0;
+						transform->velocity.x = -100;
+						sprite->Play("LeftAnimation");
+					}
 				}
 				if (keyCode.compare(shootKey) == 0) {
 					// TODO:

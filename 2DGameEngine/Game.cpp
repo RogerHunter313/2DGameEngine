@@ -10,6 +10,7 @@
 #include "KeyboardControlComponent.h"
 #include "Map.h"
 #include "ColliderComponent.h"
+#include "TextLabelComponent.h"
 
 EntityManager manager;
 AssetManager* Game::assetManager = new AssetManager(&manager);
@@ -34,6 +35,10 @@ void Game::Initialize(int width, int height) {
 	if (SDL_Init(SDL_INIT_EVERYTHING) != 0) {
 		cerr << "Error initializing SDL." << endl;
 		return;	
+	}
+	if (TTF_Init() != 0) {
+		std::cerr << "Error initializing SDL TTF" << std::endl;
+		return;
 	}
 
 	window = SDL_CreateWindow(
@@ -75,6 +80,7 @@ void Game::LoadLevel(int levelNumber) {
 	assetManager->AddTexture("radar-image", std::string("./assets/images/radar.png").c_str());
 	assetManager->AddTexture("jungle-tile-image", std::string("./assets/tilemaps/jungle.png").c_str());
 	assetManager->AddTexture("heliport-image", std::string("./assets/images/heliport.png").c_str());
+	assetManager->AddFont("charriot-font", std::string("./assets/fonts/charriot.ttf").c_str(), 14);
 
 	tileMap = new Map("jungle-tile-image", 2, 32);  // name, scale, tilesize
 	tileMap->LoadMap("./assets/tilemaps/jungle.map", 25, 20);
@@ -104,6 +110,9 @@ void Game::LoadLevel(int levelNumber) {
 	heliport.AddComponent<TransformComponent>(470, 420, 0, 0, 32, 32, 1);
 	heliport.AddComponent<SpriteComponent>("heliport-image");
 	heliport.AddComponent<ColliderComponent>("LEVEL_COMPLETE", 470, 420, 32, 32);
+
+	Entity& labelLevelName(manager.AddEntity("LabelLevelName", UI_LAYER));
+	labelLevelName.AddComponent<TextLabelComponent>(10, 10, "First Level...", "charriot-font", WHITE_COLOR);
 
 	manager.ListAllEntities();
 }

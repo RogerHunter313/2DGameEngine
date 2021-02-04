@@ -1,10 +1,10 @@
 ﻿  Game.cpp
-C:\Users\roger\Desktop\My 2D Game Engine\2DGameEngine\2DGameEngine\Game.cpp(181,45): warning C4244: '=': conversion from 'T' to 'int', possible loss of data
+C:\Users\roger\Desktop\My 2D Game Engine\2DGameEngine\2DGameEngine\Game.cpp(190,45): warning C4244: '=': conversion from 'T' to 'int', possible loss of data
           with
           [
               T=float
           ]
-C:\Users\roger\Desktop\My 2D Game Engine\2DGameEngine\2DGameEngine\Game.cpp(182,45): warning C4244: '=': conversion from 'T' to 'int', possible loss of data
+C:\Users\roger\Desktop\My 2D Game Engine\2DGameEngine\2DGameEngine\Game.cpp(191,45): warning C4244: '=': conversion from 'T' to 'int', possible loss of data
           with
           [
               T=float

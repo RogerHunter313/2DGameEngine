@@ -177,6 +177,7 @@
     <ClInclude Include="ColliderComponent.h" />
     <ClInclude Include="Map.h" />
     <ClInclude Include="KeyboardControlComponent.h" />
+    <ClInclude Include="ProjectileEmitterComponent.h" />
     <ClInclude Include="SpriteComponent.h" />
     <ClInclude Include="TextLabelComponent.h" />
     <ClInclude Include="TextureManager.h" />

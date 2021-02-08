@@ -91,7 +91,7 @@ void Game::LoadLevel(int levelNumber) {
 	Entity& bigTankEntity(manager.AddEntity("big-tank", ENEMIES_LAYER));
 	bigTankEntity.AddComponent<TransformComponent>(150, 495, 0, 0, 32, 32, 1);
 	bigTankEntity.AddComponent<SpriteComponent>("tank-image");
-	bigTankEntity.AddComponent<ColliderComponent>("enemy", 150, 495, 32, 32);
+	bigTankEntity.AddComponent<ColliderComponent>("ENEMY", 150, 495, 32, 32);
 
 	Entity& projectile(manager.AddEntity("projectile", PROJECTILE));
 	projectile.AddComponent<TransformComponent>(150 + 16, 495 + 16, 0, 0, 4, 4, 1);
@@ -218,8 +218,12 @@ void Game::CheckCollisions() {
 	if (collisionType == PLAYER_ENEMY_COLLISION) {
 		//ProcessGameOver();
 		std::cout << "huh?" << endl;
-		isRunning = false;
+		//isRunning = false;
 	}
+	if (collisionType == PLAYER_PROJECTILE_COLLISION) {
+		std::cout << "ouchie!" << endl;
+	}
+
 	if (collisionType == PLAYER_LEVEL_COMPLETE_COLLISION) {
 		//ProcessNextLevel(1);
 		std::cout << "Bruhh..." << endl;
